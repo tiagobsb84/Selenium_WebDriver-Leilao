@@ -5,6 +5,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import br.com.tiago.leilao.leiloes.LeiloesPage;
+
 public class LoginPage {
 
 	private static final String URL_LOGIN = "http://localhost:8080/login";
@@ -12,13 +14,9 @@ public class LoginPage {
 	private WebDriver browser;
 	
 	public LoginPage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
 		this.browser = new ChromeDriver();
-		browser.navigate().to(URL_LOGIN);
-	}
-	
-	public void fechar() {
-		this.browser.quit();
+		this.browser.navigate().to(URL_LOGIN);
 	}
 
 	public void preencheFormularioDeLogin(String username, String password) {
@@ -26,12 +24,9 @@ public class LoginPage {
 		browser.findElement(By.id("password")).sendKeys(password);
 	}
 
-	public void efetuaLogin() {
+	public LeiloesPage efetuaLogin() {
 		browser.findElement(By.id("login-form")).submit();
-	}
-
-	public boolean isPaginaDeLogin() {
-		return browser.getCurrentUrl().equals("http://localhost:8080/login");
+		return new LeiloesPage(browser);
 	}
 
 	public String getNomeUsuarioLogado() {
@@ -40,6 +35,10 @@ public class LoginPage {
 		} catch(NoSuchElementException e){
 			return null;
 		}
+	}
+	
+	public boolean isPaginaAtual() {
+		return browser.getCurrentUrl().contains(URL_LOGIN);
 	}
 
 	public void navegaParaPaginaDeLances() {
@@ -52,5 +51,9 @@ public class LoginPage {
 
 	public boolean isPaginaDeLoginComDadosInvalido() {
 		return browser.getCurrentUrl().equals(URL_LOGIN + "?error");
+	}
+	
+	public void fechar() {
+		this.browser.quit();
 	}
 }

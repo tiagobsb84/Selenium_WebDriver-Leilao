@@ -5,6 +5,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import br.com.tiago.leilao.lance.LancesPage;
+
 public class LoginTest {
 	
 	private LoginPage paginaLogin;
@@ -23,7 +25,7 @@ public class LoginTest {
 	public void deveriaEfetuarLoginComandosValidos() {
 		paginaLogin.preencheFormularioDeLogin("fulano", "pass");
 	    paginaLogin.efetuaLogin();
-	    Assert.assertFalse(paginaLogin.isPaginaDeLogin());
+	    Assert.assertFalse(paginaLogin.isPaginaAtual());
 	    Assert.assertEquals("fulano", paginaLogin.getNomeUsuarioLogado());
 }
 	
@@ -38,10 +40,12 @@ public class LoginTest {
 	}
 	
 	@Test
-	public void naoDeveriaAcessarPaginaRestritaSemEstarLogado() {
+	public void naoDeveriaAcessarUrlRestritaSemEstarLogado() {
+		LancesPage paginaDeLances = new LancesPage();
+		
 	    paginaLogin.navegaParaPaginaDeLances();
 	    
-	    Assert.assertTrue(paginaLogin.isPaginaDeLogin());
+	    Assert.assertTrue(paginaLogin.isPaginaAtual());
 	    Assert.assertFalse(paginaLogin.contemTexto("Dados do Leilão"));
 	}
 }
