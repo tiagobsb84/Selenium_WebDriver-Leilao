@@ -1,6 +1,8 @@
 package br.com.tiago.leilao.leiloes;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LeiloesPage {
 	
@@ -12,12 +14,23 @@ public class LeiloesPage {
 		this.browser = browser;	
 	}
 
+	public CadastroLeilaoPage carregarFormulario() {
+		this.browser.navigate().to(URL_CADASTRO_LEILAO);
+		return new CadastroLeilaoPage(browser);
+	}
+	
 	public void fechar() {
 		this.browser.quit();
 	}
 
-	public CadastroLeilaoPage carregarFormulario() {
-		this.browser.navigate().to(URL_CADASTRO_LEILAO);
-		return new CadastroLeilaoPage(browser);
+	public boolean isLeilaoCadastrado(String nome, String valor, String data) {
+		WebElement linhaDaTabela = this.browser.findElement(By.cssSelector("#tabela-leiloes tbody tr:last-child"));
+		WebElement ColunaNome = linhaDaTabela.findElement(By.cssSelector("td:nth-child(1)"));
+		WebElement ColunaDataAbertura = linhaDaTabela.findElement(By.cssSelector("td:nth-child(2)"));
+		WebElement ColunaValorInicial = linhaDaTabela.findElement(By.cssSelector("td:nth-child(3)"));
+		
+		return ColunaNome.getText().equals(nome) 
+				&& ColunaDataAbertura.getText().equals(data) 
+				&& ColunaValorInicial.getText().equals(valor);
 	}
 }

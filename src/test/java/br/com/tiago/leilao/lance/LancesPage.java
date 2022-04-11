@@ -1,4 +1,4 @@
-package br.com.tiago.leilao.lance;
+ package br.com.tiago.leilao.lance;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,7 +10,7 @@ public class LancesPage {
 	private WebDriver browser;
 	
 	public LancesPage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
 		this.browser = new ChromeDriver();
 		this.browser.navigate().to(URL_LANCES);
 	}

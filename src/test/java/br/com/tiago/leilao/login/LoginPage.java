@@ -14,17 +14,17 @@ public class LoginPage {
 	private WebDriver browser;
 	
 	public LoginPage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver");
+		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
 		this.browser = new ChromeDriver();
 		this.browser.navigate().to(URL_LOGIN);
 	}
 
-	public void preencheFormularioDeLogin(String username, String password) {
+	public void preencherFormularioDeLogin(String username, String password) {
 		browser.findElement(By.id("username")).sendKeys(username);
 		browser.findElement(By.id("password")).sendKeys(password);
 	}
 
-	public LeiloesPage efetuaLogin() {
+	public LeiloesPage efetuarLogin() {
 		browser.findElement(By.id("login-form")).submit();
 		return new LeiloesPage(browser);
 	}
@@ -39,6 +39,10 @@ public class LoginPage {
 	
 	public boolean isPaginaAtual() {
 		return browser.getCurrentUrl().contains(URL_LOGIN);
+	}
+	
+	public boolean isMensagemDeLoginInvalidoVisivel() {
+		return browser.getPageSource().contains("Usuário e senha inválidos");
 	}
 
 	public void navegaParaPaginaDeLances() {
