@@ -2,20 +2,16 @@ package br.com.tiago.leilao.login;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
+import br.com.tiago.leilao.PageObject;
 import br.com.tiago.leilao.leiloes.LeiloesPage;
 
-public class LoginPage {
+public class LoginPage extends PageObject {
 
 	private static final String URL_LOGIN = "http://localhost:8080/login";
 	
-	private WebDriver browser;
-	
 	public LoginPage() {
-		System.setProperty("webdriver.chrome.driver", "drivers/chromedriver.exe");
-		this.browser = new ChromeDriver();
+		super(null);
 		this.browser.navigate().to(URL_LOGIN);
 	}
 
@@ -36,28 +32,12 @@ public class LoginPage {
 			return null;
 		}
 	}
-	
+	 
 	public boolean isPaginaAtual() {
 		return browser.getCurrentUrl().contains(URL_LOGIN);
 	}
 	
 	public boolean isMensagemDeLoginInvalidoVisivel() {
 		return browser.getPageSource().contains("Usuário e senha inválidos");
-	}
-
-	public void navegaParaPaginaDeLances() {
-		browser.navigate().to("http://localhost:8080/leiloes/2");
-	}
-
-	public boolean contemTexto(String texto) {
-		return browser.getPageSource().contains(texto);
-	}
-
-	public boolean isPaginaDeLoginComDadosInvalido() {
-		return browser.getCurrentUrl().equals(URL_LOGIN + "?error");
-	}
-	
-	public void fechar() {
-		this.browser.quit();
 	}
 }

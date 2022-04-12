@@ -4,24 +4,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class LeiloesPage {
+import br.com.tiago.leilao.PageObject;
+
+public class LeiloesPage extends PageObject {
 	
 	private static final String URL_CADASTRO_LEILAO = "http://localhost:8080/leiloes/new";
 	private static final String URL_LEILOES = "http://localhost:8080/leiloes";
-	
-	private WebDriver browser;
 
 	public LeiloesPage(WebDriver browser) {
-		this.browser = browser;	
+		super(browser);
 	}
 
 	public CadastroLeilaoPage carregarFormulario() {
 		this.browser.navigate().to(URL_CADASTRO_LEILAO);
 		return new CadastroLeilaoPage(browser);
-	}
-	
-	public void fechar() {
-		this.browser.quit();
 	}
 
 	public boolean isLeilaoCadastrado(String nome, String valor, String data) {
